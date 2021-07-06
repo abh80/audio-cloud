@@ -1,0 +1,27 @@
+.titlebar {
+  width: 100%;
+  height: 35px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: transparent;
+}
+.controlarea {
+  width: 20%;
+  height: 100%;
+  background-color: rgba(66, 66, 66, 0.801);
+  max-width: 161.6px;
+  min-width: 150px;
+}
+.window-controls-holder {
+  width: 100%;
+  height: 100%;
+}
+.window-controls-holder img {
+  margin: auto;
+  margin-top: 5px;
+}
+.window-controls-holder:hover {
+    background-color: #424242;
+}
