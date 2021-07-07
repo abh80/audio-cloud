@@ -1,6 +1,7 @@
 const SoundCloud = require("soundcloud-scraper");
 const SoundCloudClient = new SoundCloud.Client();
-const Player = require("./AudioPlayer");
+const AudioPlayer = require("./AudioPlayer");
+const Player = new AudioPlayer();
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("platform", process.platform);
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .getInfo("https://soundcloud.com/drewgannon/somesayremix")
       .then((s) => {
         wrapper.getStream(s.streams.progressive).then((u) => {
-          new Player().startStream(u, { rate: 48000 }, ["bass=g=20"]);
+          Player.startStream(u, { rate: 48000 }, ["bass=g=20"]);
         });
       });
   });
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function subscribeWindowControls() {
   document.getElementById("close-btn").addEventListener("click", () => {
+    Player.speaker && !Player.speaker.destroyed ? Player.speaker.destroy() : null;
     ipcRenderer.invoke("close-pressed");
   });
   document.getElementById("res-max-btn").addEventListener("click", () => {

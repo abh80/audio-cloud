@@ -1,7 +1,7 @@
 const { EventEmitter } = require("events");
 const { spawn } = require("child_process");
 const Speaker = require("speaker");
-const ffmpeg = require("ffmpeg-static");
+const ffmpeg = require("ffmpeg-static-electron");
 class AudioPlayer extends EventEmitter {
   constructor() {
     super();
@@ -44,7 +44,10 @@ class AudioPlayer extends EventEmitter {
     let arr = ["-i", stream, "-f", "s16le", "-ac", "2"];
     if (filters && filters.length) arr = arr.concat(["-af", filters.join(",")]);
     arr.push("pipe:1");
-    const out = spawn(ffmpeg, arr);
+    const out = spawn(
+      ffmpeg.path.replace("app.asar", "app.asar.unpacked"),
+      arr
+    );
     out.stdout.pipe(this.speaker);
     this.stream = out.stdout;
     this.speaker.on("finish", () => {

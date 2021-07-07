@@ -19,7 +19,9 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "asar": true,
+        "asar": {
+          "unpack": "**/node_modules/ffmpeg-static-electron/**"
+        },
         "icon": "./icons/soundcloud.icns",
         "productName": "Audio Cloud"
       },
@@ -64,7 +66,7 @@
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
-    "ffmpeg-static": "^4.4.0",
+    "ffmpeg-static-electron": "^2.0.1",
     "soundcloud-scraper": "^5.0.0",
     "speaker": "^0.5.3"
   },
