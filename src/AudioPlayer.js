@@ -1,6 +1,7 @@
 const { EventEmitter } = require("events");
 const { spawn } = require("child_process");
 const Speaker = require("speaker");
+const ffmpeg = require("ffmpeg-static");
 class AudioPlayer extends EventEmitter {
   constructor() {
     super();
@@ -40,9 +41,10 @@ class AudioPlayer extends EventEmitter {
       bitDepth: 16,
       sampleRate: data.rate,
     });
-    const arr = ["-i", stream, "-f", "s16le", "-ac", "2", "pipe:1"];
-    if (filters && filters.length) arr.concat(["-af", filters.join(",")]);
-    const out = spawn("ffmpeg", arr);
+    let arr = ["-i", stream, "-f", "s16le", "-ac", "2"];
+    if (filters && filters.length) arr = arr.concat(["-af", filters.join(",")]);
+    arr.push("pipe:1");
+    const out = spawn(ffmpeg, arr);
     out.stdout.pipe(this.speaker);
     this.stream = out.stdout;
     this.speaker.on("finish", () => {

@@ -1,9 +1,31 @@
 import React from "react";
 import styles from "./styles/Home.module.css";
-import TitleBar from "./components/WindowControls";
+import TitleBarMac from "./components/MacControls";
+import TitleBarWin from "./components/WindowControls";
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      platform: null,
+    };
+  }
+  componentDidMount() {
+    this.setState({ platform: window.platform });
+  }
   render() {
-    return <TitleBar />;
+    return (
+      <div>
+        {this.state.platform ? (
+          this.state.platform === "win32" ? (
+            <TitleBarWin />
+          ) : (
+            <TitleBarMac />
+          )
+        ) : (
+          <TitleBarMac />
+        )}
+      </div>
+    );
   }
 }
 

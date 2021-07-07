@@ -24,7 +24,7 @@ const createWindow = () => {
     frame: false,
     transparent: true,
     webPreferences: {
-      devTools: isDev ? true : false,
+      devTools: isDev ? true : true,
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
@@ -99,7 +99,7 @@ const registerIpcMainHandlers = (mainWindow) => {
     if (mainWindow.isMaximized()) {
       const lastSize = store.lastWindowSize();
 
-      mainWindow.setSize(800, 600, true);
+      mainWindow.setSize(lastSize.width, lastSize.height, true);
       mainWindow.setPosition(
         lastSize.x ? lastSize.x : 0,
         lastSize.y ? lastSize.y : 0

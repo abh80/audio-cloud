@@ -23,5 +23,17 @@
   margin-top: 5px;
 }
 .window-controls-holder:hover {
-    background-color: #424242;
+  background-color: #424242;
+}
+.mac-controls {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.mac-controls svg {
+  visibility: hidden;
+}
+#mac-control-grid:hover .mac-controls svg {
+  visibility: visible;
 }

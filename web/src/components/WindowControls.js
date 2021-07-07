@@ -7,6 +7,7 @@ export default function WindowControls() {
           <div className="ml-20 font-semibold">{"Audio Cloud"}</div>
         </div>
         <div
+          
           className={
             "right-0 absolute grid grid-cols-3 grid-flow-col " +
             styles.controlarea

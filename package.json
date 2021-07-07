@@ -20,7 +20,7 @@
     "forge": {
       "packagerConfig": {
         "asar": true,
-        "icon": "./icons/soundcloud.ico",
+        "icon": "./icons/soundcloud.icns",
         "productName": "Audio Cloud"
       },
       "makers": [
@@ -32,10 +32,11 @@
           }
         },
         {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "format": "ULFO",
+            "name": "Audio Cloud"
+          }
         },
         {
           "name": "@electron-forge/maker-deb",
@@ -63,6 +64,7 @@
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
+    "ffmpeg-static": "^4.4.0",
     "soundcloud-scraper": "^5.0.0",
     "speaker": "^0.5.3"
   },
