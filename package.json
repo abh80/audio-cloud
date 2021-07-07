@@ -1,7 +1,7 @@
 {
   "name": "audio-cloud",
   "productName": "audio-cloud",
-  "version": "1.0.0",
+  "version": "1.2.0-alpha-rc",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -19,13 +19,16 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "asar": true
+        "asar": true,
+        "icon": "./icons/soundcloud.ico",
+        "productName": "Audio Cloud"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "audio_cloud"
+            "name": "AudioCloud",
+            "iconUrl": "https://raw.githubusercontent.com/abh80/abh80/master/soundcloud.ico"
           }
         },
         {
