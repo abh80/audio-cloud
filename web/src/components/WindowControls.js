@@ -13,13 +13,13 @@ export default function WindowControls() {
           }
         >
           <div id="min-btn" className={styles["window-controls-holder"]}>
-            <img src="/icons/min-w-20.png" alt="minimize" />
+            <img src="./icons/min-w-20.png" alt="minimize" />
           </div>
           <div id="res-max-btn" className={styles["window-controls-holder"]}>
-            <img src="/icons/max-w-20.png" alt="maximize" />
+            <img src="./icons/max-w-20.png" alt="maximize" />
           </div>
           <div id="close-btn" className={styles["window-controls-holder"]}>
-            <img src="/icons/close-w-20.png" alt="close" />
+            <img src="./icons/close-w-20.png" alt="close" />
           </div>
         </div>
       </div>
