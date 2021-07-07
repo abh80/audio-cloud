@@ -42,6 +42,17 @@
           "name": "@electron-forge/maker-rpm",
           "config": {}
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "abh80",
+              "name": "audio-cloud"
+            }
+          }
+        }
       ]
     }
   },
