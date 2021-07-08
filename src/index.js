@@ -96,9 +96,15 @@ const registerIpcMainHandlers = (mainWindow) => {
     mainWindow.minimize();
   });
   ipcMain.handle("res-max-pressed", () => {
-    if (mainWindow.isMaximized()) {
+    if (process.platform == "darwin" && mainWindow.isFullScreen()) {
       const lastSize = store.lastWindowSize();
-
+      mainWindow.setSize(lastSize.width, lastSize.height, true);
+      mainWindow.setPosition(
+        lastSize.x ? lastSize.x : 0,
+        lastSize.y ? lastSize.y : 0
+      );
+    } else if (mainWindow.isMaximized()) {
+      const lastSize = store.lastWindowSize();
       mainWindow.setSize(lastSize.width, lastSize.height, true);
       mainWindow.setPosition(
         lastSize.x ? lastSize.x : 0,
@@ -106,7 +112,8 @@ const registerIpcMainHandlers = (mainWindow) => {
       );
       store.setMaximized(false);
     } else {
-      mainWindow.maximize();
+      if (process.platform == "darwin") mainWindow.setFullScreen(true);
+      else mainWindow.maximize();
       store.setMaximized(true);
     }
   });
