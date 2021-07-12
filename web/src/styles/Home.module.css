@@ -1,0 +1,47 @@
+.songItem:hover {
+  background-color: #282828;
+}
+.songItem {
+  overflow: hidden;
+  background-color: #181818;
+  cursor: pointer;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s all;
+  padding: 15px;
+}
+.songItem img {
+  height: 180px;
+  width: 100%;
+  border-radius: 5px;
+}
+.play-button {
+  background-color: #ff5500;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  position: absolute;
+  margin-top: -70px;
+  margin-left: 120px;
+  box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
+  padding: 12px;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+}
+.play-button:hover {
+  background-color: #ff3300;
+}
+.songItem:hover .play-button {
+  opacity: 1;
+}
+.song-progress {
+  width: 100%;
+  background-color: #535353;
+  height: 6px;
+  border-radius: 15px;
+}
+.song-track {
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #ff3300;
+}

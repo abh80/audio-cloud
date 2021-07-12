@@ -4,7 +4,13 @@ class Store {
     this.store = new ElectronStore();
     this.isMaximized = false;
   }
-
+  getRaw(val) {
+    return this.store.get(val);
+  }
+  setRaw(val) {
+    this.store.set(val);
+    return true;
+  }
   lastWindowSize() {
     const size = this.store.get("win_size");
     if (!size)

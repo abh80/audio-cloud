@@ -19,8 +19,9 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "appCopyright": "Fast Open Source",
         "asar": {
-          "unpack": "**/node_modules/ffmpeg-static-electron/**"
+          "unpack": "**/node_modules/@(ffmpeg-static-electron|ffprobe-static-electron)/**"
         },
         "icon": "./icons/soundcloud.icns",
         "productName": "Audio Cloud"
@@ -63,10 +64,14 @@
     }
   },
   "dependencies": {
+    "discord-rpc": "^4.0.1",
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
     "ffmpeg-static-electron": "^2.0.1",
+    "ffprobe-static-electron": "^2.0.0",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
     "soundcloud-scraper": "^5.0.0",
     "speaker": "^0.5.3"
   },

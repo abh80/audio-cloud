@@ -3,13 +3,15 @@ const path = require("path");
 let isDev = require("electron-is-dev");
 const url = require("url");
 const { Store } = require("./store");
+const { Client } = require("discord-rpc");
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
+const rpcClient = new Client({ transport: "ipc" });
 
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
 const store = new Store();
-const createWindow = () => {
+const createWindow = (registerIpc) => {
   const lastSize = store.lastWindowSize();
   const mainWindow = new BrowserWindow({
     x: lastSize.x,
@@ -56,7 +58,7 @@ const createWindow = () => {
   mainWindow.on("unmaximize", () => {
     store.setMaximized(false);
   });
-  registerIpcMainHandlers(mainWindow);
+  if (registerIpc !== false) registerIpcMainHandlers(mainWindow);
   lastSize.maximized ? mainWindow.maximize() : null;
   mainWindow.once("ready-to-show", () => mainWindow.show());
   mainWindow.loadURL(
@@ -70,19 +72,35 @@ const createWindow = () => {
   );
 };
 
-app.on("ready", createWindow);
+app.on("ready", () => createWindow(true));
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
-    process.exit();
   }
 });
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
+    if (process.platform == "darwin") {
+      createWindow(false);
+    }
     createWindow();
   }
+});
+ipcMain.handle("set-rpc", (e, { name, artist, time = new Date() }) => {
+  rpcClient
+    .setActivity({
+      details: `Listening ${name}`,
+      state: `by ${artist}`,
+      largeImageKey: "soundcloud",
+      largeImageText: "Listening on Audio Cloud",
+      startTimestamp: parseInt((time / 1000).toFixed(0)),
+    })
+    .catch();
+});
+ipcMain.handle("remove-rpc", () => {
+  rpcClient.clearActivity().catch();
 });
 /**
  *
@@ -118,3 +136,4 @@ const registerIpcMainHandlers = (mainWindow) => {
     }
   });
 };
+rpcClient.login({ clientId: "862943897902907392" }).catch();

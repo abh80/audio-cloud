@@ -1,0 +1,56 @@
+.search-bar-input input[type="text"] {
+  border-radius: 15px;
+  padding-left: 5px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: black;
+  height: 32px;
+  width: 25%;
+}
+.search-bar-input input[type="text"]:focus {
+  outline: 0;
+  border: none;
+}
+.search-result-holder {
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  min-height: 100px;
+  min-width: 600px;
+  z-index: 5;
+  user-select: none;
+}
+.song-item-cover {
+  width: 50px;
+  height: 100%;
+}
+.song-item-mini {
+  cursor: pointer;
+  border-radius: 15px;
+  user-select: none;
+}
+.song-item-mini:hover {
+  background-color: rgb(175, 175, 177);
+}
+.play-button {
+  background-color: #ff5500;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  margin-left: auto;
+  margin-right: 0;
+  position: relative;
+  top: 5px;
+  color: white;
+  box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
+  padding: 12px;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+}
+.play-button:hover {
+  background-color: #ff3300;
+}
+.song-item-mini:hover .play-button {
+  opacity: 1;
+}
