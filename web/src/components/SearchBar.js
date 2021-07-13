@@ -2,6 +2,8 @@ import styles from "../styles/SearchBar.module.css";
 import React, { useEffect } from "react";
 import SongItem from "./miniSongItem";
 export default function SearchBar() {
+  let timer;
+  const typingOffset = 2000;
   const [songs, setSongs] = React.useState([]);
   useEffect(() => {
     window.onclick = (e) => {
@@ -34,8 +36,14 @@ export default function SearchBar() {
           placeholder="Search..."
           autoCorrect="off"
           spellCheck="false"
-          onChange={(e) => {
-            handleSearch(e, setSongs, songs);
+          onKeyUp={(e) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+              handleSearch(e, setSongs, songs);
+            }, typingOffset);
+          }}
+          onKeyDown={(e) => {
+            clearTimeout(timer);
           }}
         />
       </div>
@@ -60,6 +68,8 @@ export default function SearchBar() {
 }
 function handleSearch($ev, setSongs, songs) {
   setSongs([]);
+
+  const thisSongs = [];
   const searchText = $ev.target.value;
   if (searchText.trim() === "") {
     if (
@@ -76,10 +86,13 @@ function handleSearch($ev, setSongs, songs) {
       const { title, author, thumbnail } = await window.wrapper.getInfo(
         song.url
       );
-      setSongs([
-        ...songs,
-        { name: title, cover: thumbnail, artist: author.name, url: song.url },
-      ]);
+      thisSongs.push({
+        name: title,
+        cover: thumbnail,
+        artist: author.name,
+        url: song.url,
+      });
+      setSongs(thisSongs);
     });
   });
   document.getElementById("search-result-holder").classList.remove("hidden");

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
 let isDev = require("electron-is-dev");
 const url = require("url");
@@ -20,7 +20,7 @@ const createWindow = (registerIpc) => {
     height: lastSize.height,
     show: false,
     minWidth: 800,
-    height: 600,
+    minHeight: 600,
     resizable: true,
     icon: path.join(__dirname, "..", "icons", "soundcloud.ico"),
     frame: false,
@@ -112,6 +112,14 @@ const registerIpcMainHandlers = (mainWindow) => {
   });
   ipcMain.handle("min-pressed", () => {
     mainWindow.minimize();
+  });
+  ipcMain.handle("show-dialog", (e, message) => {
+    dialog.showMessageBox(mainWindow, {
+      type: "info",
+      buttons: ["Ok"],
+      title: "Audio Cloud",
+      message,
+    });
   });
   ipcMain.handle("res-max-pressed", () => {
     if (process.platform == "darwin" && mainWindow.isFullScreen()) {

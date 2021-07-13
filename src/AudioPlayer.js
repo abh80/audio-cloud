@@ -93,7 +93,7 @@ class AudioPlayer extends EventEmitter {
       this.startedAt = Date.now();
     });
     out.stdout.pipe(this.speaker);
-    const dur = await this.getDuration(stream);
+    const dur = await this.getDuration(stream, data.rate);
     this.stream = out.stdout;
     this.speaker.on("finish", () => {
       if (this.isPaused) return this.emit("stream-paused");
@@ -106,11 +106,13 @@ class AudioPlayer extends EventEmitter {
       this.pausedAt = null;
       this.pausedTime = 0;
       this.isPaused = false;
+      this.startedAt = null;
     });
+
     this.dur = dur;
     return true;
   }
-  getDuration(stream) {
+  getDuration(stream, rate) {
     return new Promise((resolve, reject) => {
       let arr = ["-print_format", "json", "-show_format", `\"${stream}\"`];
 
@@ -128,8 +130,9 @@ class AudioPlayer extends EventEmitter {
 
       r.stdout.on("end", () => {
         v = JSON.parse(v);
-        this.emit("time-get", v.format.duration);
-        resolve(v.format.duration);
+        let d = (44000 / rate) * parseInt(v.format.duration);
+        this.emit("time-get", d);
+        resolve(d);
       });
     });
   }

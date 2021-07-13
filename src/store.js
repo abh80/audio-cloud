@@ -7,6 +7,20 @@ class Store {
   getRaw(val) {
     return this.store.get(val);
   }
+  getPresets() {
+    let presets = this.store.get("presets");
+    if (!presets) {
+      presets = {
+        bass: 0,
+        rate: 44000,
+      };
+      this.store.set("presets", presets);
+    }
+    return presets;
+  }
+  setPresets(data) {
+    this.store.set("presets", data);
+  }
   setRaw(val) {
     this.store.set(val);
     return true;

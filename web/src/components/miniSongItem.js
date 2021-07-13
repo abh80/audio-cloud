@@ -24,19 +24,14 @@ export default function SongItem({ cover, name, artist, url }) {
         <div
           className={styles["play-button"]}
           onClick={async () => {
-            document.getElementById("search-result-holder").classList.add("hidden");
+            document
+              .getElementById("search-result-holder")
+              .classList.add("hidden");
             const song = await window.wrapper.getInfo(url);
             const stream = await window.wrapper.getStream(
               song.streams.progressive
             );
-            window.wrapper.play(
-              stream,
-              { name, artist, cover },
-              {
-                sampleRate: 48000,
-                customArg: ["apulsator=hz=0.09"],
-              }
-            );
+            window.wrapper.play(stream, { name, artist, cover });
           }}
         >
           <svg

@@ -6,7 +6,8 @@ const { contextBridge, ipcRenderer } = require("electron");
 const moment = require("moment");
 require("moment-duration-format")(moment);
 contextBridge.exposeInMainWorld("platform", process.platform);
-
+const { Store } = require("./store");
+const store = new Store();
 const wrapper = {
   async search(q, type = "track") {
     return await SoundCloudClient.search(q, type);
@@ -20,6 +21,19 @@ const wrapper = {
       SoundCloudClient.API_KEY
     );
   },
+  getPresets() {
+    return store.getPresets();
+  },
+  setPresets(data) {
+    ipcRenderer.invoke(
+      "show-dialog",
+      "Your Filter will apply after this track"
+    );
+    return store.setPresets(data);
+  },
+  showDialog(message) {
+    ipcRenderer.invoke("show-dialog", message);
+  },
   async play(
     stream,
     meta = {
@@ -28,14 +42,13 @@ const wrapper = {
       cover: null,
     },
     presets = {
-      bass: 20,
-      sampleRate: 44100,
+      bass: parseInt(store.getPresets().bass) || 0,
+      sampleRate: parseInt(store.getPresets().rate) || 44000,
       customArg: [],
     }
   ) {
     let f = [];
-    if (presets.bass && typeof presets.bass == "number")
-      f = f.concat(["bass=g=" + presets.bass, "dynaudnorm"]);
+
     if (presets.customArg.length) f = f.concat(presets.customArg);
     Player.startStream(stream, { rate: presets.sampleRate }, f);
     ipcRenderer.invoke("set-rpc", { name: meta.name, artist: meta.artist });
@@ -54,6 +67,9 @@ SoundCloudClient.createAPIKey().then(async () => {
 });
 document.addEventListener("DOMContentLoaded", async () => {
   handleSub();
+  document.getElementById("sample-rate-preset").value =
+    wrapper.getPresets().rate;
+  document.getElementById("bass-preset").value = wrapper.getPresets().bass;
   Player.on("time-get", (t) => {
     document.getElementById("total").textContent = moment
       .duration(t, "seconds")

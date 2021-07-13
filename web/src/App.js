@@ -4,6 +4,7 @@ import TitleBarMac from "./components/MacControls";
 import styles from "./styles/Home.module.css";
 import TitleBarWin from "./components/WindowControls";
 import SearchBar from "./components/SearchBar";
+import FilterBar from "./components/FilterBar";
 class App extends React.Component {
   constructor() {
     super();
@@ -41,6 +42,7 @@ class App extends React.Component {
             />
           </div>
         </div>
+        <FilterBar />
         <div
           className="fixed"
           style={{
