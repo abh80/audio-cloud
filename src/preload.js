@@ -48,8 +48,9 @@ const wrapper = {
     }
   ) {
     let f = [];
-
     if (presets.customArg.length) f = f.concat(presets.customArg);
+    if (presets.bass && typeof presets.bass == "number")
+      f = f.concat(["bass=g=" + presets.bass]);
     Player.startStream(stream, { rate: presets.sampleRate }, f);
     ipcRenderer.invoke("set-rpc", { name: meta.name, artist: meta.artist });
     document.getElementById("current_song_title").textContent =
